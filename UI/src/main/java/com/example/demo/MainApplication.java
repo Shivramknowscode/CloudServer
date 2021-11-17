@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MainApplication {
 
     
-    static String nodeIdStr = "";
+    static String nodeIdStr = "pendingoutput";
 
     public static void main(String[] args){
 
@@ -19,11 +19,13 @@ public class MainApplication {
         randUUID = randUUID.toString();
 
         InputNode inputData = new InputNode();
-
-        String workerName = args[0];
-        nodeIdStr = workerName.substring(workerName.length()-1);
+// hyphens or any special chars
+// pendingoutput
+        String workerName = "pendingoutput";
+        //nodeIdStr = workerName.substring(workerName.length()-1);
+        nodeIdStr = workerName;
         System.out.println("NodeID: "+nodeIdStr);
-        String ENDPOINT = "http://s3:9000";
+        String ENDPOINT = "http://127.0.0.1:9000";
         String ACCESSKEY = "minioadmin";
         String SECRETKEY = "minioadmin";
         String currentPendingOperation = randUUID;
@@ -33,10 +35,10 @@ public class MainApplication {
             while(true){
                 Thread.sleep(5000);
 
-                boolean pendingOperation = false;
+                    boolean pendingOperation = false;
 
                 //Check if object(file) exists in bucket pending<nodeId>
-                Iterable<Result<Item>> listObjects = minioClient.listObjects(ListObjectsArgs.builder().bucket("pending"+nodeIdStr).build());
+                Iterable<Result<Item>> listObjects = minioClient.listObjects(ListObjectsArgs.builder().bucket(nodeIdStr).build());
                 for (Result<Item> n: listObjects) {
                     currentPendingOperation = n.get().objectName();
                     pendingOperation = true;

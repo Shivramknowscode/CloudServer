@@ -10,6 +10,7 @@ import javax.imageio.IIOException;
 import java.io.*;
 import java.util.Locale;
 import java.io.FileWriter;
+import java.util.UUID;
 
 import static com.example.demo.MainApplication.main;
 import static com.example.demo.MainApplication.nodeIdStr;
@@ -35,6 +36,15 @@ public class InputNode {
         this.userOperation = userOperation;
     }
 
+    public static void main(String[] args) throws IOException {
+        String ENDPOINT = "http://127.0.0.1:9000";
+        String ACCESSKEY = "minioadmin";
+        String SECRETKEY = "minioadmin";
+        String currentPendingOperation = UUID.randomUUID().toString();
+
+            MinioClient minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESSKEY, SECRETKEY).build();
+        inputSelection(minioClient,currentPendingOperation,"Tarun","Pending");
+    }
     public static void inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) throws IOException {
         //Example result written to resultN bucket: {"jsonrpc": "2.0","result": "test", "id": 2}
         JSONObject obj = new JSONObject();
@@ -46,7 +56,7 @@ public class InputNode {
 
 
         // Constructs a FileWriter given a file name, using the platform's default charset to view data on a text editor
-        FileWriter file = new FileWriter("/Users/Shared/crunchify.txt");
+        FileWriter file = new FileWriter("/Users/tarunmittal/Documents/crunchify.txt");
         file.write(obj.toJSONString());
         System.out.println("Successfully Copied JSON Object to File...");
         System.out.println("\nJSON Object: " + obj);
@@ -60,7 +70,7 @@ public class InputNode {
             // Create object currentPendingOperation in 'result'+nodeIdStr with content from the input stream.
             //Store result in result<nodeId> bucket with filename equal to filename of object(file) read from pending<nodeId>
             minioClient.putObject(
-                    PutObjectArgs.builder().bucket("result"+nodeIdStr).object(currentPendingOperation).stream(
+                    PutObjectArgs.builder().bucket(nodeIdStr).object(currentPendingOperation).stream(
                                     bais, bais.available(), -1)
                             .build());
 
