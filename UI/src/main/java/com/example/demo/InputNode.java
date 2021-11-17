@@ -9,7 +9,9 @@ import org.json.simple.parser.JSONParser;
 import javax.imageio.IIOException;
 import java.io.*;
 import java.util.Locale;
+import java.io.FileWriter;
 
+import static com.example.demo.MainApplication.main;
 import static com.example.demo.MainApplication.nodeIdStr;
 
 public class InputNode {
@@ -33,7 +35,7 @@ public class InputNode {
         this.userOperation = userOperation;
     }
 
-    public static void inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) {
+    public static void inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) throws IOException {
         //Example result written to resultN bucket: {"jsonrpc": "2.0","result": "test", "id": 2}
         JSONObject obj = new JSONObject();
         obj.put("userOperation", userOperation);
@@ -41,6 +43,14 @@ public class InputNode {
         String[] pendingOperationParts = currentPendingOperation.split("\\.");
         obj.put("id", pendingOperationParts[0]);
         System.out.print(obj);
+
+
+        // Constructs a FileWriter given a file name, using the platform's default charset to view data on a text editor
+        FileWriter file = new FileWriter("/Users/Shared/crunchify.txt");
+        file.write(obj.toJSONString());
+        System.out.println("Successfully Copied JSON Object to File...");
+        System.out.println("\nJSON Object: " + obj);
+
 
         StringBuilder builder = new StringBuilder(obj.toString());
         // Create a InputStream for object upload.
@@ -67,8 +77,8 @@ public class InputNode {
                 System.out.println(ioException.getMessage());
             }
         }
-
         System.out.println("Operation results uploaded successfully");
 
     }
+
 }

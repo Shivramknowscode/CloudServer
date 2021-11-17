@@ -10,16 +10,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MainApplication {
 
+    
     static String nodeIdStr = "";
 
     public static void main(String[] args){
+
+        String randUUID = "";
+        randUUID = randUUID.toString();
+
+        InputNode inputData = new InputNode();
+
         String workerName = args[0];
         nodeIdStr = workerName.substring(workerName.length()-1);
         System.out.println("NodeID: "+nodeIdStr);
-        String ENDPOINT = args[1];
-        String ACCESSKEY = args[2];
-        String SECRETKEY = args[3];
-        String currentPendingOperation = "";
+        String ENDPOINT = "http://s3:9000";
+        String ACCESSKEY = "minioadmin";
+        String SECRETKEY = "minioadmin";
+        String currentPendingOperation = randUUID;
 
         try {
             MinioClient minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESSKEY, SECRETKEY).build();
