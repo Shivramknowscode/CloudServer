@@ -1,0 +1,1 @@
+{"jsonrpc": "2.0", "method": "toUpperCase", "params": "test input string in lower case", "id": 0002}
