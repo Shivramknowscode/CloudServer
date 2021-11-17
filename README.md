@@ -1,11 +1,3 @@
-# SWEN-755-2211-Group3
-
-Patchability Project - Group 3
-
-Luis Gutierrez, 
-Kemar James, 
-Katie Volz, 
-Shivram Mahendran
 
 # Installation Instructions
 ## Install Docker
