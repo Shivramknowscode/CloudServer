@@ -43,7 +43,7 @@ public class InputNode {
         String currentPendingOperation = UUID.randomUUID().toString();
 
             MinioClient minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESSKEY, SECRETKEY).build();
-        inputSelection(minioClient,currentPendingOperation,"Tarun","Pending");
+        inputSelection(minioClient,currentPendingOperation,"Test","Pending");
     }
     public static void inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) throws IOException {
         //Example result written to resultN bucket: {"jsonrpc": "2.0","result": "test", "id": 2}
@@ -56,7 +56,7 @@ public class InputNode {
 
 
         // Constructs a FileWriter given a file name, using the platform's default charset to view data on a text editor
-        FileWriter file = new FileWriter("/Users/tarunmittal/Documents/crunchify.txt");
+        FileWriter file = new FileWriter("/Users/Shivram/Documents/crunchify.txt");
         file.write(obj.toJSONString());
         System.out.println("Successfully Copied JSON Object to File...");
         System.out.println("\nJSON Object: " + obj);
