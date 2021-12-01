@@ -17,26 +17,23 @@ public class WebController implements WebMvcConfigurer {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/results").setViewName("results");
 	}
-
-//	@GetMapping("/home")
-//	public String mainForm(Model model) {
-//		model.addAttribute("inputNode", new InputNode());
-//		return "home";
-//	}
 //
-	@PostMapping("/home")
-	public String mainSubmit(@ModelAttribute InputNode inputNode, Model model) {
-		model.addAttribute("inputNode", inputNode);
-		return "results";
+//	@PostMapping("/home")
+//	public String mainSubmit(@ModelAttribute InputNode inputNode, Model model) {
+//		model.addAttribute("inputNode", inputNode);
+//		return "results";
+//	}
+
+	@GetMapping("/home")
+	public String home(@ModelAttribute InputNode inputNode, Model model) {
+//		model.addAttribute("inputNode", inputNode);
+		return "home";
 	}
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String home(@RequestParam(value = "userInput", required = false) String userInput,
 					   @RequestParam(value = "userOperation", required = false) String userOperation,
 					   Model model) {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>userOperation: " + userOperation);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>userInput: " + userInput);
 		model.addAttribute("userInput",userInput);
 		model.addAttribute("userOperation", userOperation);
 
@@ -49,61 +46,11 @@ public class WebController implements WebMvcConfigurer {
 		try {
 			String result = InputNode.inputSelection(minioClient, userOperation, userInput, currentPendingOperation);
 			System.out.println("RESULT: " + result);
-//			return  result;
 		} catch (IOException e) {
 			e.printStackTrace();
-//			return "ERROR: " + e.getMessage();
 		}
-
-
-//		InputNode inputNode = new InputNode();
-//		inputNode.setUserInput(String.valueOf(model.addAttribute("inputNode")));
-//		model.addAttribute("InputNode", new InputNode());
-//		inputNode.getUserOperation();
-//		try {
-//			String ret = InputNode.inputSelection(MinioClient.builder().build(), getuserOperation().toString(), inputNode.getUserInput(), UUID.randomUUID().toString());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		return "home";
+		return "results";
 	}
-
-//	@RequestMapping("/home")
-//	public String formData(InputNode inputNode) {
-//		return "/home";
-//	}
-
-
-
-
-//	@RequestMapping(value = "/", method = RequestMethod.POST)
-//	public String getEditUserPage(@PathVariable("id") Long id, Model model, HttpServletRequest request,
-//								  @RequestParam("email") String email, @RequestParam("role") String role,
-//								  @RequestParam("f_name") String firstname, @RequestParam("l_name") String l_name,
-//								  @RequestParam("submit") String type) {
-//		// Auth
-//		HttpSession session = request.getSession();
-//		String ret = InputNode.inputSelection(session, "admin");
-//		if (ret != null) {
-//			return ret;
-//		}
-//
-//		public String checkPersonInfo ( @ModelAttribute,BindingResult bindingResult){
-//
-//			if (bindingResult.hasErrors()) {
-//				return "home";
-//			}
-//
-//			return "redirect:/results";
-//		}
-//	}
-
-//	@PostMapping("/")
-//	public String submitForm(@ModelAttribute("inputnode") InputNode inputNode){
-//
-//		return null;
-//	}
-
 	@ModelAttribute("userOperation")
 	public String[] getuserOperation() {
 		return new String[]{
