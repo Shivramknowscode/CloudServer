@@ -15,6 +15,7 @@ public class MainApplication {
 
     public static void main(String[] args){
 
+        SpringApplication.run(InputNode.class, args);
         String randUUID = "";
         randUUID = randUUID.toString();
 

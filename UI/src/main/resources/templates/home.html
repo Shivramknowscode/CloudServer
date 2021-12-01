@@ -18,19 +18,21 @@
 <body>
 <div class="container w-container">
   <div class="form-block w-form">
-    <form id="email-form" name="email-form" data-name="Email Form" class="form" form action="#" th:action="@{/}" th:object="${InputNode}" method="post">
+    <form id="email-form" name="email-form" data-name="Email Form" class="form" th:action="@{/home}" th:object="${InputNode}" method="GET">
 
       <label>Select Operation</label>
 
-      <select id="field" name="field" class="w-select" th:field="*{userOperation}">
-      <option value="">Select one...</option>
-      <option value="First">reverseString</option>
-      <option value="Second">toUpperCase</option>
+<!--      <select id="field" name="field" class="w-select" th:name="userOperation" th:field="*{userOperation}">-->
+      <select id="userOperation" name="userOperation" th:name="userOperation" class="w-select">
+        <option value="">Select one...</option>
+        <option value="reverseString">reverseString</option>
+        <option value="toUpperCase">toUpperCase</option>
       </select>
 
     <label>Select Input</label>
 
-      <input type="text" id="userInput" name="userInput" th:field="*{userInput}">
+<!--      <input type="text" id="userInput" th:name="userInput" th:field="*{userInput}">-->
+      <input type="text" id="userInput" name="userInput" th:name="userInput">
       <input type="submit" value="Submit" data-wait="Please wait..." class="submit-button w-button">
     </form>
 

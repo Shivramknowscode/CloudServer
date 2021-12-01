@@ -2,19 +2,19 @@ package com.example.demo;
 
 import io.minio.*;
 import io.minio.errors.*;
-import io.minio.messages.Item;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.imageio.IIOException;
 import java.io.*;
-import java.util.Locale;
 import java.io.FileWriter;
 import java.util.UUID;
 
-import static com.example.demo.MainApplication.main;
 import static com.example.demo.MainApplication.nodeIdStr;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class InputNode {
 
     private String userOperation;
@@ -36,16 +36,7 @@ public class InputNode {
         this.userOperation = userOperation;
     }
 
-    public static void main(String[] args) throws IOException {
-        String ENDPOINT = "http://127.0.0.1:9000";
-        String ACCESSKEY = "minioadmin";
-        String SECRETKEY = "minioadmin";
-        String currentPendingOperation = UUID.randomUUID().toString();
-
-            MinioClient minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESSKEY, SECRETKEY).build();
-        inputSelection(minioClient,currentPendingOperation,"Test","Pending");
-    }
-    public static void inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) throws IOException {
+    public static String inputSelection(MinioClient minioClient, String userOperation, String userInput, String currentPendingOperation) throws IOException {
         //Example result written to resultN bucket: {"jsonrpc": "2.0","result": "test", "id": 2}
         JSONObject obj = new JSONObject();
         obj.put("userOperation", userOperation);
@@ -89,6 +80,21 @@ public class InputNode {
         }
         System.out.println("Operation results uploaded successfully");
 
+        return userOperation;
     }
+
+    public static void main(String[] args) throws IOException {
+
+        SpringApplication.run(InputNode.class, args);
+        String ENDPOINT = "http://127.0.0.1:9000";
+        String ACCESSKEY = "minioadmin";
+        String SECRETKEY = "minioadmin";
+        String currentPendingOperation = UUID.randomUUID().toString();
+
+        MinioClient minioClient = MinioClient.builder().endpoint(ENDPOINT).credentials(ACCESSKEY, SECRETKEY).build();
+        inputSelection(minioClient,currentPendingOperation,"Test","pending");
+
+    }
+
 
 }

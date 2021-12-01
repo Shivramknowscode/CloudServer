@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Results</title>
 </head>
 <body>
 <h1> Result Page Works!</h1>
+
+<h1>Result</h1>
+<p th:text="'id: ' + ${inputNode.userOperation}" />
+<p th:text="'content: ' + ${inputNode.userInput}" />
+<a href="/greeting">Submit another message</a>
+
 </body>
 </html>
